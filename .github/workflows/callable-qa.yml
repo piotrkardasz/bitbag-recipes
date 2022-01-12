@@ -71,7 +71,7 @@ jobs:
           git commit -m 'Create Flex endpoint' || true
           git push origin -f flex/pull-${{ github.event.number }}
           git switch pr
-          git stash pop -q
+          git stash pop -q || true
 
       -
         name: Compute diff between recipe versions
