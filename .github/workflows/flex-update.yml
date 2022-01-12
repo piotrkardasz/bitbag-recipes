@@ -1,0 +1,17 @@
+name: Update Flex endpoint
+
+on:
+    push:
+        branches:
+            - main
+
+defaults:
+    run:
+        shell: bash
+
+jobs:
+    call-flex-update:
+        uses: piotrkardasz/bitbag-recipes/.github/workflows/callable-flex-update.yml@workflows
+        with:
+            branch: main
+            contrib: false

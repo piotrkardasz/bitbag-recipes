@@ -1,0 +1,14 @@
+name: Q&A
+
+on:
+    pull_request_target:
+
+defaults:
+    run:
+        shell: bash
+
+jobs:
+    call-qa:
+        uses: piotrkardasz/bitbag-recipes/.github/workflows/callable-qa.yml@workflows
+        with:
+            branch: main
