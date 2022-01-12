@@ -1,0 +1,12 @@
+{
+  "aliases": [],
+  "recipes": [],
+  "versions": [],
+  "branch": "main",
+  "is_contrib": false,
+  "_links": {
+    "repository": "github.com/piotrkardasz/bitbag-recipes",
+    "origin_template": "{package}:{version}@github.com/piotrkardasz/bitbag-recipes:master",
+    "recipe_template": "https://raw.githubusercontent.com/piotrkardasz/bitbag-recipes/flex/main/{package_dotted}.{version}.json",
+  }
+}
