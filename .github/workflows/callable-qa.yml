@@ -216,16 +216,40 @@ jobs:
 
   create-project:
     needs: run-checks
-    name: Run updated recipes
+    name: "Run updated recipes on PHP ${{ matrix.php }}, Sylius ${{ matrix.sylius }}, Symfony ${{ matrix.symfony }}, MySQL ${{ matrix.mysql }}"
     runs-on: Ubuntu-20.04
+
+    strategy:
+      fail-fast: false
+      matrix:
+        php: [ "7.4" ]
+        symfony: [ "^4.4", "^5.2" ]
+        sylius: [ "1.9", "1.10" ]
+        mysql: [ "5.7" ]
+
+    env:
+      DATABASE_URL: "mysql://root:root@127.0.0.1/sylius?serverVersion=${{ matrix.mysql }}"
 
     steps:
       -
         name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          coverage: "none"
-          php-version: "${{ inputs.create_project_php }}"
+          php-version: "${{ matrix.php }}"
+          extensions: intl
+          tools: symfony
+          coverage: none
+
+      -
+        name: Shutdown default MySQL
+        run: sudo service mysql stop
+
+      -
+        name: Setup MySQL
+        uses: mirromutth/mysql-action@v1.1
+        with:
+          mysql version: "${{ matrix.mysql }}"
+          mysql root password: "root"
 
       -
         name: Export configuration
@@ -237,31 +261,13 @@ jobs:
           [[ "" != "$PACKAGES" ]]
 
       -
-        name: Create-project with skeleton ^4
+        name: Create-project
         if: "always() && steps.config.outcome == 'success'"
         run: |
           set -x
-          composer create-project --ansi "symfony/skeleton:^4" v4
-          cd v4
-          composer config extra.symfony.allow-contrib ${{ inputs.contrib && 'true' || 'false' }}
-          composer config minimum-stability dev
-          export SYMFONY_ENDPOINT=https://raw.githubusercontent.com/${{ github.repository }}/flex/pull-${{ github.event.number }}/index.json
-          composer require -W --ansi $PACKAGES
-          EXIT_CODE=$?
-          
-          if [[ EXIT_CODE -eq 2 ]]; then
-              echo -e "\n#\n#\n# You can ignore this error if your package does not support Symfony 4\n#\n#\n#\n"
-          fi
-          
-          exit $EXIT_CODE
-
-      -
-        name: Create-project with skeleton ^5
-        if: "always() && steps.config.outcome == 'success'"
-        run: |
-          set -x
-          composer create-project --ansi "symfony/skeleton:^5" v5
-          cd v5
+          composer create-project --ansi "sylius/sylius-standard:${{ matrix.sylius }}.*" ${{ matrix.sylius }}
+          cd ${{ matrix.sylius }}
+          composer config extra.symfony.require "${{ matrix.symfony }}"
           composer config extra.symfony.allow-contrib ${{ inputs.contrib && 'true' || 'false' }}
           composer config minimum-stability dev
           export SYMFONY_ENDPOINT=https://raw.githubusercontent.com/${{ github.repository }}/flex/pull-${{ github.event.number }}/index.json
