@@ -219,6 +219,7 @@ jobs:
     name: "Run updated recipes on PHP ${{ matrix.php }}, Sylius ${{ matrix.sylius }}, Symfony ${{ matrix.symfony }}, MySQL ${{ matrix.mysql }}"
     runs-on: Ubuntu-20.04
 
+    continue-on-error: ${{ matrix.experimental }}
     strategy:
       fail-fast: false
       matrix:
@@ -226,6 +227,16 @@ jobs:
         symfony: [ "^4.4", "^5.2" ]
         sylius: [ "1.9", "1.10" ]
         mysql: [ "5.7" ]
+        experimental: [false]
+        exclude:
+          - symfony: "^4.4"
+            sylius: "1.10"
+        include:
+          - php: "7.4"
+            symfony: "^4.4"
+            sylius: "1.10"
+            mysql: "5.7"
+            experimental: true
 
     env:
       DATABASE_URL: "mysql://root:root@127.0.0.1/sylius?serverVersion=${{ matrix.mysql }}"
