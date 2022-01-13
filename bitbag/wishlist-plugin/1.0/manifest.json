@@ -1,0 +1,9 @@
+{
+    "aliases": ["wishlist"],
+    "bundles": {
+        "BitBag\\SyliusWishlistPlugin\\BitBagSyliusWishlistPlugin": ["all"]
+    },
+    "copy-from-recipe": {
+        "config/": "%CONFIG_DIR%/"
+    }
+}
