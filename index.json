@@ -1,8 +1,13 @@
 {
-    "aliases": [],
+    "aliases": {
+        "wishlist": "bitbag/wishlist-plugin"
+    },
     "recipes": {
         "bitbag/shipping-export-plugin": [
             "1.4"
+        ],
+        "bitbag/wishlist-plugin": [
+            "1.0"
         ]
     },
     "versions": [],
