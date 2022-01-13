@@ -7,7 +7,6 @@
     "_links": {
         "repository": "github.com/piotrkardasz/bitbag-recipes",
         "origin_template": "{package}:{version}@github.com/piotrkardasz/bitbag-recipes:main",
-        "recipe_template": "https://raw.githubusercontent.com/piotrkardasz/bitbag-recipes/flex/main/{package_dotted}.{version}.json",
-        "archived_recipes_template": "https://raw.githubusercontent.com/piotrkardasz/bitbag-recipes/flex/main/archived/{package_dotted}/{ref}.json"
+        "recipe_template": "https://raw.githubusercontent.com/piotrkardasz/bitbag-recipes/flex/main/{package_dotted}.{version}.json"
     }
 }
