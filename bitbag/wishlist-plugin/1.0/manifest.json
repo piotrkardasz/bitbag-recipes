@@ -1,4 +1,5 @@
 {
+    "aliases": ["wishlist"],
     "bundles": {
         "BitBag\\SyliusWishlistPlugin\\BitBagSyliusWishlistPlugin": ["all"]
     },
