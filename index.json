@@ -1,6 +1,10 @@
 {
     "aliases": [],
-    "recipes": [],
+    "recipes": {
+        "bitbag/shipping-export-plugin": [
+            "1.4"
+        ]
+    },
     "versions": [],
     "branch": "main",
     "is_contrib": false,
