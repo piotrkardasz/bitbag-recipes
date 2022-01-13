@@ -276,10 +276,11 @@ jobs:
         if: "always() && steps.config.outcome == 'success'"
         run: |
           set -x
-          composer create-project --ansi "sylius/sylius-standard:${{ matrix.sylius }}.*" ${{ matrix.sylius }}
+          composer create-project --ansi "sylius/sylius-standard:${{ matrix.sylius }}.*" ${{ matrix.sylius }} --no-install --no-scripts
           cd ${{ matrix.sylius }}
           composer config extra.symfony.require "${{ matrix.symfony }}"
           composer config extra.symfony.allow-contrib ${{ inputs.contrib && 'true' || 'false' }}
           composer config minimum-stability dev
+          composer --ansi install
           export SYMFONY_ENDPOINT=https://raw.githubusercontent.com/${{ github.repository }}/flex/pull-${{ github.event.number }}/index.json
           composer require -W --ansi $PACKAGES
